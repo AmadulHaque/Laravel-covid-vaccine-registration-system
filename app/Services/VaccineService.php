@@ -22,13 +22,14 @@ class VaccineService
                 $user = User::create($userData);
 
                 $center = VaccineCenter::findOrFail($centerId);
-                $scheduledDate = $this->getNextAvailableDate($center);
-        
+                $scheduled = $this->getNextAvailableDate($center);
+                
+                
                 Registration::create([
                     'user_id'           => $user->id,
                     'vaccine_center_id' => $center->id,
-                    'scheduled_date'    => $scheduledDate,
-                    'status'            => 3,
+                    'scheduled_date'    => $scheduled['date'],
+                    'status'            => $scheduled['status'] =='ok' ? VACCINE_STATUS_ID['Scheduled'] : VACCINE_STATUS_ID['Not scheduled'],
                 ]);
         
                 return $user;

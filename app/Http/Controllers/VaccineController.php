@@ -48,12 +48,12 @@ class VaccineController extends Controller
         $user = User::with('registration')->where('nid', $nid)->first();
 
         if (!$user) {
-            return view('vaccine.status', ['status' => 'Not registered']);
+            return view('vaccine.status', ['status' => VACCINE_STATUS_ID['Not registered']]);
         }
 
         return view('vaccine.status', [
             'status' => $user->registration->status,
-            'scheduledDate' => optional($user->registration)->scheduled_date,
+            'scheduledDate' =>$user->registration->scheduled_date,
         ]);
     }
 

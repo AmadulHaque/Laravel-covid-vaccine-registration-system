@@ -1,66 +1,155 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# COVID Vaccine Registration System
 
-## About Laravel
+## Overview
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+This project is a COVID Vaccine Registration System developed using Laravel. The application allows users to register for vaccination, select a vaccine center, and schedule their vaccination based on availability. It follows a first-come, first-served approach, ensuring vaccinations are scheduled only for weekdays (Sunday to Thursday).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Features
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- **User registration with NID for vaccination.**
+- **Selection of a vaccine center (with a daily capacity limit per center).**
+- **Scheduling based on first-come, first-served for weekdays.**
+- **Notifications sent via email at 9 PM on the night before the scheduled vaccination date.**
+- **Status search page (for viewing registration, scheduling, and vaccination statuses).**
+- **Efficient handling of center capacity limits.**
+- **Unit tests to ensure functionality.**
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-## Laravel Sponsors
+## Technologies Used
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- **Backend: PHP 8, Laravel 10**
+- **Frontend:Blade,Tailwind CSS**
+- **Build Tool: Vite (for building assets)**
+- **Database: MySQL**
+- **Testing: PHPUnit**
 
-### Premium Partners
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+## Prerequisites
 
-## Contributing
+- **PHP ^8.2**
+- **Laravel ^11.9**
+- **Composer**
+- **Node.js and npm**
+- **MySQL**
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Installation
 
-## Code of Conduct
+1.Clone the repository:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+        git clone https://github.com/AmadulHaque/Laravel-covid-vaccine-registration-system 
 
-## Security Vulnerabilities
+cd Laravel-covid-vaccine-registration-system
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-## License
+2.Install PHP dependencies:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+        composer install
+
+
+3.Install Node.js dependencies:
+
+        npm install
+
+4.Copy the .env.example to .env:
+
+        cp .env.example .env
+
+5.Set up your environment variables in .env, including:
+
+        DB_CONNECTION=mysql
+        DB_HOST=127.0.0.1
+        DB_PORT=3306
+        DB_DATABASE=your_database
+        DB_USERNAME=your_username
+        DB_PASSWORD=your_password
+        MAIL_MAILER=smtp
+        MAIL_HOST=smtp.mailtrap.io
+        MAIL_PORT=2525
+        MAIL_USERNAME=your_mailtrap_username
+        MAIL_PASSWORD=your_mailtrap_password
+
+6.Generate application key:
+
+        php artisan key:generate
+
+7.Run migrations and seed the database:
+
+        php artisan migrate --seed
+
+The seeders will populate the database with initial vaccine centers.
+
+## Running the Application
+
+1.Build front-end assets using Vite:
+
+        npm run build
+
+2.Start the Laravel development server:
+
+        php artisan serve
+
+By default, the app will run on http://localhost:8000.
+
+
+## Usage
+### Registration
+
+- **Visit http://localhost:8000/registration to register for the vaccine.**
+- **Users must provide their name, email, and NID, and select a vaccine center.**
+
+### Check Status
+
+- **Go to http://localhost:8000/status to check your vaccination status using your NID.**
+
+### Email Notification System
+
+The application includes an email notification system to notify users about their scheduled vaccination appointment.
+
+#### How It Works
+
+- **A Laravel command (vaccine:send-reminder-emails) is scheduled to run every day at 9 PM. This command sends an email reminder to all users who are scheduled for vaccination the following day.**
+
+- **The email contains the user's name, vaccine center details, and the scheduled date.**
+
+### Set Up the Cron Job
+
+Ensure the Laravel scheduler is running on your server. Add this to your crontab:
+
+        * * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1
+
+### Testing the Command
+You can manually run the command to test it before scheduling it:
+
+        php artisan vaccine:send-reminder-emails 
+
+
+## Future Improvements: Adding SMS Notifications
+
+### Install an SMS Provider SDK:
+
+We would need to integrate an SMS service provider like Twilio, Nexmo, or Plivo. Install the appropriate package via Composer:
+
+            composer require twilio/sdk
+
+
+### Create an SMS Notification Service:
+
+    A new service class would be created to handle sending SMS messages. This would follow the same structure as our email service (e.g., VaccineEmail),
+
+
+
+### Testing
+
+We have written unit tests to ensure the system works as expected. You can run the tests using the following command:
+
+        php artisan test
+
+### Sample tests include:
+
+- **Ensuring users can't register twice.**
+- **Handling cases where a vaccine center is full.**
+- **Ensuring scheduling respects weekday-only scheduling.**

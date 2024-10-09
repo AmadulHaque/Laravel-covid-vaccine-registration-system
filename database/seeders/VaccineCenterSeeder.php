@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\VaccineCenter;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class VaccineCenterSeeder extends Seeder
@@ -13,6 +14,10 @@ class VaccineCenterSeeder extends Seeder
     */
     public function run(): void
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        VaccineCenter::truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
         $vaccineCenters = [
             ['name' => 'Community Health Center Dhaka',         'daily_limit' => 100],
             ['name' => 'Primary Health Center Mirpur',          'daily_limit' => 50],

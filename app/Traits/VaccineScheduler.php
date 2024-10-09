@@ -15,8 +15,11 @@ trait VaccineScheduler
             ->orderBy('scheduled_date', 'desc')
             ->first();
 
-        $nextDate = now()->nextWeekday();
-
+        $nextDate = [
+            'status' => 'ok',
+            'date'   => now()->nextWeekday()
+        ];
+        
         if ($lastScheduled) {
             $nextDate = $this->calculateNextDate($lastScheduled, $center);
         }
@@ -29,13 +32,18 @@ trait VaccineScheduler
     {
         $date = Carbon::parse($lastScheduled->scheduled_date);
         $countOnDate = Registration::where('vaccine_center_id', $center->id)
-            ->where('scheduled_date', $date->toDateString())
+            ->whereDate('scheduled_date','2024-10-10')
             ->count();
 
         if ($countOnDate >= $center->daily_limit) {
-            $date = $date->nextWeekday();
+            return [
+                'status' => 'full',
+                'date'   =>  null
+            ]; 
         }
-
-        return $date->toDateString();
+        return [
+            'status' => 'ok',
+            'date'   => $date->toDateString()
+        ]; 
     }
 }
